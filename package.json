@@ -1,0 +1,40 @@
+{
+  "name": "aws-cloud-service",
+  "version": "1.0.0",
+  "description": "NodeJS RESTful API in AWS Cloud",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .ts,.js,.mjs --fix",
+    "start:dev": "nodemon --ext js,ts --watch . --ignore build/ index.ts ",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SergBlack/aws-cloud-service.git"
+  },
+  "keywords": [
+    "nodejs",
+    "aws",
+    "cloud"
+  ],
+  "author": "Sergey Osipchuk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SergBlack/aws-cloud-service/issues"
+  },
+  "homepage": "https://github.com/SergBlack/aws-cloud-service#readme",
+  "devDependencies": {
+    "@types/node": "^16.11.1",
+    "@typescript-eslint/eslint-plugin": "^5.1.0",
+    "@typescript-eslint/parser": "^5.1.0",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "husky": "^7.0.2",
+    "nodemon": "^2.0.14",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.3.0",
+    "typescript": "^4.4.4"
+  }
+}
