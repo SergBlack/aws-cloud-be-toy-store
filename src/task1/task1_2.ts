@@ -7,7 +7,7 @@ const destFilePath = './src/task1/files/hw1-ex1.txt';
 const readStream = fs.createReadStream(sourceFilePath);
 const writeStreamFile = fs.createWriteStream(destFilePath, 'utf8');
 
-function writeLine(line: any) {
+function writeLine(line: string) {
   console.log(`Line from file: ${line}`);
   writeStreamFile.write(`${line}\n`);
 }
