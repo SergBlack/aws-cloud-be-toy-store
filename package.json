@@ -8,7 +8,8 @@
     "lint": "eslint . --ext .ts,.js,.mjs --fix",
     "start:dev": "nodemon --ext js,ts --watch . --ignore build/ index.ts ",
     "task1_1": "nodemon src/task1/task1_1.ts",
-    "task1_2": "nodemon src/task1/task1_2.ts"
+    "task1_2": "nodemon src/task1/task1_2.ts",
+    "task1_2_add": "nodemon src/task1/task1_2_additional.ts"
   },
   "repository": {
     "type": "git",
