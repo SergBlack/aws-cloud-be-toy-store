@@ -1,3 +1,3 @@
-# aws-cloud-service
+# aws-cloud-be
 
-NodeJS RESTful API in AWS Cloud
+NodeJS RESTful API on AWS Cloud that provides services for a toy store
