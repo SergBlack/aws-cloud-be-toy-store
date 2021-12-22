@@ -1,9 +1,9 @@
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
-import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
 
-import productSchema from '../../schemas/product';
-const mockData = require('../../mock-data/mock.json');
+import productSchema from '@schemas/product';
+import { Api } from '@libs/api';
+import { getProduct } from '@controllers/product.controller';
 
 const getProductById: ValidatedEventAPIGatewayProxyEvent<typeof productSchema> = async (event) => {
   const {
@@ -13,15 +13,22 @@ const getProductById: ValidatedEventAPIGatewayProxyEvent<typeof productSchema> =
     pathParameters,
   } = event;
 
-  const foundProduct = mockData.filter(product => product.id === pathParameters.id);
+  try {
+    const product = await getProduct(pathParameters.id);
 
-  return formatJSONResponse({
-    data: foundProduct,
-    message: foundProduct.length ? 'Success' : 'Product was not found in the database',
-    resource,
-    path,
-    httpMethod,
-  });
+    if (!product) {
+      return Api.sendNotFound('Product was not found in the database');
+    }
+
+    return Api.sendOk({
+      data: product,
+      resource,
+      path,
+      httpMethod,
+    });
+  } catch (e) {
+    return Api.sendServerError();
+  }
 };
 
 export const main = middyfy(getProductById);
