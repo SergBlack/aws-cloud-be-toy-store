@@ -1,4 +1,4 @@
-INSERT INTO products (id, description, price, title, imageSrc) VALUES
+INSERT INTO products (id, description, price, title, image_src) VALUES
        ('7567ec4b-b10c-48c5-9345-fc73c77a80aa', 'Nintendo amiibo toys of characters Mario,Luigi, and Peach', 50, 'MarioBros', 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'),
        ('7567ec1b-b10c-48c5-9345-fc73c48a80a0', 'A pre-loved teddy bear in a second hand store', 10, 'Teddy bear', 'https://images.unsplash.com/photo-1556012018-50c5c0da73bf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'),
        ('7567ec2b-b10c-48c5-9345-fc73c48a80a2', 'Minion are yellow', 23, 'Minion', 'https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'),

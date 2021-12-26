@@ -3,10 +3,9 @@ export default {
   properties: {
     count: { type: 'number' },
     description: { type: 'string' },
-    id: { type: 'string' },
     price: { type: 'number' },
     title: { type: 'string' },
-    imageSrc: { type: 'string' },
+    image_src: { type: 'string' },
   },
-  required: ['count', 'description', 'id', 'price', 'title', 'imageSrc'],
+  required: ['count', 'price', 'title'],
 } as const;

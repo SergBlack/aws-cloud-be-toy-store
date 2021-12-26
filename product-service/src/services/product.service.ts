@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export class ProductService {
   private client;
 
@@ -25,6 +27,38 @@ export class ProductService {
       );
 
       return product;
+    } catch (e) {
+      console.log(e.stack);
+      throw e;
+    }
+  }
+
+  async create({
+    title,
+    price,
+    count,
+    description = '',
+    image_src = '',
+  }: {
+    title: string;
+    price: number;
+    count: number;
+    description?: string;
+    image_src?: string;
+  }) {
+    const id = uuidv4();
+
+    try {
+      await this.client.query(
+        `insert into products (id, description, price, title, image_src) 
+          values ('${id}', '${description}', ${price}, '${title}', '${image_src}');`,
+      );
+      await this.client.query(
+        `insert into stocks (product_id, count) 
+          values ('${id}', ${count});`,
+      );
+
+      return await this.findById(id);
     } catch (e) {
       console.log(e.stack);
       throw e;
