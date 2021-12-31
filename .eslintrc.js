@@ -49,6 +49,7 @@ module.exports = {
         'comma-dangle': ['error', 'always-multiline'],
         semi: ['error', 'always'],
         '@typescript-eslint/no-var-requires': 'off',
+        camelcase: 'warn',
       },
     },
   ],

@@ -3,5 +3,5 @@ CREATE TABLE IF NOT EXISTS products (
 	title text not null,
 	description text,
 	price int,
-	imageSrc text
+	image_src text
 )
