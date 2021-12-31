@@ -25,7 +25,7 @@ export class Api {
     return formatJSONResponse(STATUS_CODES.NotFound, { message }, headers);
   }
 
-  static sendServerError(message?: string) {
-    return formatJSONResponse(STATUS_CODES.ServerError, { message }, headers);
+  static sendServerError() {
+    return formatJSONResponse(STATUS_CODES.ServerError, { message: 'Server error' }, headers);
   }
 }

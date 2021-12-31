@@ -1,0 +1,6 @@
+ALTER TABLE stocks
+	ADD CONSTRAINT product_id
+	FOREIGN KEY (product_id)
+	REFERENCES products(id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
