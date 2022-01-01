@@ -1,11 +1,11 @@
 export default {
   type: 'object',
   properties: {
-    count: { type: 'number' },
-    description: { type: 'string' },
-    price: { type: 'number' },
     title: { type: 'string' },
-    image_src: { type: 'string' },
+    price: { type: 'number' },
+    count: { type: 'number' },
+    description: { type: 'string', nullable: true },
+    image_src: { type: 'string', nullable: true },
   },
   required: ['count', 'price', 'title'],
 } as const;
