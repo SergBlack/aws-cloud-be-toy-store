@@ -9,7 +9,6 @@ import { dbOptions } from '../dbOptions';
 import productSchema from '@schemas/product';
 import { ProductService } from '@services/product.service';
 
-const client = new Client(dbOptions);
 const ajv = new Ajv();
 addFormats(ajv);
 const uuidSchema = { type: 'string', format: 'uuid' };
@@ -25,6 +24,8 @@ const getProductById: ValidatedEventAPIGatewayProxyEvent<typeof productSchema> =
   console.log({
     resource, path, httpMethod, pathParameters,
   });
+
+  const client = new Client(dbOptions);
   await client.connect();
   const productService = new ProductService(client);
 
