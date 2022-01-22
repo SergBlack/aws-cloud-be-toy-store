@@ -1,13 +1,12 @@
 import addFormats from 'ajv-formats';
 import Ajv from 'ajv';
-import { Client } from 'pg';
 import { middyfy } from '@libs/lambda';
 import { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
 
 import { Api } from '@libs/api';
-import { dbOptions } from '../dbOptions';
 import productSchema from '@schemas/product';
 import { ProductService } from '@services/product.service';
+import { getPgClient } from '@libs/getPgClient';
 
 const ajv = new Ajv();
 addFormats(ajv);
@@ -25,8 +24,7 @@ const getProductById: ValidatedEventAPIGatewayProxyEvent<typeof productSchema> =
     resource, path, httpMethod, pathParameters,
   });
 
-  const client = new Client(dbOptions);
-  await client.connect();
+  const client = await getPgClient();
   const productService = new ProductService(client);
 
   try {
