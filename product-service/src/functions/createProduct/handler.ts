@@ -1,13 +1,12 @@
 import Ajv, { JSONSchemaType } from 'ajv';
-import { Client } from 'pg';
 import { middyfy } from '@libs/lambda';
 
 import { Api } from '@libs/api';
-import { dbOptions } from '../dbOptions';
 import { IProduct } from '@interfaces/product';
 import { ProductService } from '@services/product.service';
 import productSchema from '@schemas/product';
 import { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
+import { getPgClient } from '@libs/getPgClient';
 
 const ajv = new Ajv();
 const schema: JSONSchemaType<IProduct> = productSchema;
@@ -27,8 +26,7 @@ const createProduct: ValidatedEventAPIGatewayProxyEvent<typeof productSchema> = 
     body,
   });
 
-  const client = new Client(dbOptions);
-  await client.connect();
+  const client = await getPgClient();
   const productService = new ProductService(client);
 
   try {
