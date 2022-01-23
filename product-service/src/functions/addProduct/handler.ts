@@ -12,7 +12,7 @@ const ajv = new Ajv();
 const schema: JSONSchemaType<IProduct> = productSchema;
 const validate = ajv.compile(schema);
 
-const createProduct: ValidatedEventAPIGatewayProxyEvent<typeof productSchema> = async (event) => {
+const addProduct: ValidatedEventAPIGatewayProxyEvent<typeof productSchema> = async (event) => {
   const {
     resource,
     path,
@@ -34,7 +34,7 @@ const createProduct: ValidatedEventAPIGatewayProxyEvent<typeof productSchema> = 
       return Api.sendBadRequest(validate.errors?.[0].message);
     }
 
-    const newProduct = await productService.create(body);
+    const newProduct = await productService.add(body);
 
     return Api.sendOk({
       data: newProduct,
@@ -51,4 +51,4 @@ const createProduct: ValidatedEventAPIGatewayProxyEvent<typeof productSchema> = 
   }
 };
 
-export const main = middyfy(createProduct);
+export const main = middyfy(addProduct);
