@@ -1,6 +1,5 @@
 import csv from 'csvtojson';
 import readline from 'readline';
-import { GetObjectCommandOutput } from '@aws-sdk/client-s3';
 
 import { middyfy } from '@libs/lambda';
 import {
@@ -10,16 +9,22 @@ import {
   s3Client,
 } from '@libs/s3Client';
 import { BUCKET } from '@common/constants';
+import { SendMessageCommand, sqsClient } from '@libs/sqsClient';
 
-function printContent(object: GetObjectCommandOutput) {
-  const readlineInterface = readline.createInterface({
-    input: object.Body.pipe(csv()),
-  });
+const { SQS_URL = '' } = process.env;
 
-  readlineInterface
-    .on('line', (line) => console.log(`${line}\n`))
-    .on('close', () => console.log('File has been read'));
-}
+const sendSqsMessage = async (line) => {
+  console.log(`${line}\n`);
+
+  const sqsParams = {
+    QueueUrl: SQS_URL,
+    MessageBody: line,
+  };
+
+  const sqsSendMessageCommand = new SendMessageCommand(sqsParams);
+
+  await sqsClient.send(sqsSendMessageCommand);
+};
 
 const importFileParser = async (event) => {
   const { Records } = event;
@@ -46,7 +51,13 @@ const importFileParser = async (event) => {
 
       const object = await s3Client.send(getObjectCommand);
 
-      printContent(object);
+      const readlineInterface = readline.createInterface({
+        input: object.Body.pipe(csv()),
+      });
+
+      readlineInterface
+        .on('line', sendSqsMessage)
+        .on('close', () => console.log('File has been read'));
 
       await s3Client.send(copyObjectCommand);
       await s3Client.send(deleteObjectCommand);

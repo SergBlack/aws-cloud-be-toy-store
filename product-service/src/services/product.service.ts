@@ -1,3 +1,5 @@
+import { IProduct } from '@interfaces/product';
+
 export class ProductService {
   private client;
 
@@ -32,7 +34,7 @@ export class ProductService {
     }
   }
 
-  async create({
+  async add({
     title,
     price,
     count,
@@ -63,6 +65,21 @@ export class ProductService {
       return { ...product[0], ...stock[0] };
     } catch (e) {
       await this.client.query('rollback');
+      console.log(e.stack);
+      throw e;
+    }
+  }
+
+  async addItems(items: IProduct[]) {
+    try {
+      const addItemToDb = async (item: IProduct) => {
+        await this.add(item);
+      };
+
+      const promises = items.map(addItemToDb);
+
+      await Promise.all(promises);
+    } catch (e) {
       console.log(e.stack);
       throw e;
     }

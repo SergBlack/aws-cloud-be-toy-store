@@ -1,6 +1,11 @@
 import type { AWS } from '@serverless/typescript';
 
-import { createProduct, getProductsList, getProductById } from '@functions/index';
+import {
+  addProduct,
+  catalogBatchProcess,
+  getProductsList,
+  getProductById,
+} from '@functions/index';
 
 const serverlessConfiguration: AWS = {
   service: 'product-service',
@@ -18,11 +23,48 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      SNS_ARN: {
+        Ref: 'createProductTopic',
+      },
     },
     lambdaHashingVersion: '20201221',
+    iamRoleStatements: [
+      {
+        Effect: 'Allow',
+        Action: 'sns:*',
+        Resource: {
+          Ref: 'createProductTopic',
+        },
+      },
+    ],
+  },
+  resources: {
+    Resources: {
+      createProductTopic: {
+        Type: 'AWS::SNS::Topic',
+        Properties: {
+          TopicName: 'import-service-create-product-topic',
+        },
+      },
+      createProductSubscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          TopicArn: {
+            Ref: 'createProductTopic',
+          },
+          Endpoint: 'sergei.osipchuk.vtb@gmail.com',
+          Protocol: 'email',
+        },
+      },
+    },
   },
   // import the function via paths
-  functions: { createProduct, getProductsList, getProductById },
+  functions: {
+    addProduct,
+    catalogBatchProcess,
+    getProductsList,
+    getProductById,
+  },
   package: { individually: true },
   custom: {
     esbuild: {

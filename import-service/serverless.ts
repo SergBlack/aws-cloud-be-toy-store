@@ -18,6 +18,9 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      SQS_URL: {
+        Ref: 'catalogItemsQueue',
+      },
     },
     lambdaHashingVersion: '20201221',
     iamRoleStatements: [
@@ -31,7 +34,24 @@ const serverlessConfiguration: AWS = {
         Action: 's3:*',
         Resource: 'arn:aws:s3:::toy-store-import/*',
       },
+      {
+        Effect: 'Allow',
+        Action: 'sqs:*',
+        Resource: {
+          'Fn::GetAtt': ['catalogItemsQueue', 'Arn'],
+        },
+      },
     ],
+  },
+  resources: {
+    Resources: {
+      catalogItemsQueue: {
+        Type: 'AWS::SQS::Queue',
+        Properties: {
+          QueueName: 'import-service-catalog-items-queue',
+        },
+      },
+    },
   },
   // import the function via paths
   functions: { importProductsFile, importFileParser },
