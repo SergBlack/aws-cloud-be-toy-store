@@ -11,6 +11,7 @@ const serverlessConfiguration: AWS = {
   service: 'product-service',
   frameworkVersion: '2',
   plugins: ['serverless-esbuild', 'serverless-dotenv-plugin'],
+  useDotenv: true,
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
@@ -52,7 +53,7 @@ const serverlessConfiguration: AWS = {
           TopicArn: {
             Ref: 'createProductTopic',
           },
-          Endpoint: 'sergei.osipchuk.vtb@gmail.com',
+          Endpoint: '${env:SNS_EMAIL}',
           Protocol: 'email',
         },
       },

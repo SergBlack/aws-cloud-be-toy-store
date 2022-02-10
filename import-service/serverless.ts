@@ -52,6 +52,13 @@ const serverlessConfiguration: AWS = {
         },
       },
     },
+    Outputs: {
+      SQSArn: {
+        Value: {
+          'Fn::GetAtt': ['catalogItemsQueue', 'Arn'],
+        },
+      },
+    },
   },
   // import the function via paths
   functions: { importProductsFile, importFileParser },
