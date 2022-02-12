@@ -50,6 +50,7 @@ module.exports = {
         semi: ['error', 'always'],
         '@typescript-eslint/no-var-requires': 'off',
         camelcase: 'warn',
+        'no-template-curly-in-string': 'warn',
       },
     },
   ],
