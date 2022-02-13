@@ -10,7 +10,7 @@ export class ProductService {
   async getAll() {
     try {
       const { rows: products } = await this.client.query(
-        'SELECT p.id, title, description, price, image_src, count FROM products p JOIN stocks s ON p.id = s.product_id;',
+        'SELECT p.id, title, description, price, image_src, s.count FROM products p JOIN stocks s ON p.id = s.product_id;',
       );
 
       return products;
