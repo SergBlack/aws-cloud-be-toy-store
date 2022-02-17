@@ -21,6 +21,17 @@ const serverlessConfiguration: AWS = {
     },
     lambdaHashingVersion: '20201221',
   },
+  resources: {
+    Outputs: {
+      BasicAuthorizerLambdaFunctionQualifiedArn: {
+        Export: {
+          Name: {
+            'Fn::Sub': '${AWS::StackName}-BasicAuthorizerArn',
+          },
+        },
+      },
+    },
+  },
   // import the function via paths
   functions: { basicAuthorizer },
   package: { individually: true },
