@@ -16,7 +16,10 @@ export default {
           },
         },
         authorizer: {
-          arn: 'arn:aws:lambda:eu-west-1:611212157086:function:authorization-service-dev-basicAuthorizer',
+          name: 'basicAuthorizer',
+          arn: {
+            'Fn::ImportValue': 'authorization-service-dev-BasicAuthorizerArn',
+          },
           identitySource: 'method.request.header.Authorization',
           resultTtlInSeconds: 0,
           type: 'request',
